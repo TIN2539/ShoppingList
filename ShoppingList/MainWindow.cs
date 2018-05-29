@@ -13,6 +13,38 @@ namespace ShoppingList
 			InitializeComponent();
 		}
 
+		public bool IsAddButtonEnabled
+		{
+			get
+			{
+				return addButton.Enabled = IsUniqueString;
+			}
+		}
+
+		public bool IsUniqueString
+		{
+			get
+			{
+				bool checkSpacebar = IsUnnecessarySpacebar;
+				return normalizedString.Length > 0 && productCheckedListBox.FindStringExact(normalizedString) == -1;
+			}
+		}
+
+		public bool IsUnnecessarySpacebar
+		{
+			get
+			{
+				char[] separator = { ' ' };
+				string[] words = productTextBox.Text.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+				if (words.Length > 0)
+				{
+					words[0] = words[0].Substring(0, 1).ToUpper() + words[0].Substring(1, words[0].Length - 1).ToLower();
+				}
+				normalizedString = string.Join(" ", words);
+				return true;
+			}
+		}
+
 		private void AddButton_Click(object sender, EventArgs e)
 		{
 			productCheckedListBox.Items.Add(normalizedString);
@@ -36,33 +68,6 @@ namespace ShoppingList
 			MoveItemDown(productCheckedListBox.SelectedIndex + 2);
 		}
 
-		private void IsAddButtonEnabled()
-		{
-			addButton.Enabled = IsUniqueString();
-		}
-
-		private void IsPossibleDelete(ItemCheckEventArgs e)
-		{
-			deleteButton.Enabled = productCheckedListBox.CheckedItems.Count > 1 || e.NewValue == CheckState.Checked;
-		}
-
-		private bool IsUniqueString()
-		{
-			IsUnnecessarySpacebar();
-			return normalizedString.Length > 0 && productCheckedListBox.FindStringExact(normalizedString) == -1;
-		}
-
-		private void IsUnnecessarySpacebar()
-		{
-			char[] separator = { ' ' };
-			string[] words = productTextBox.Text.Split(separator, StringSplitOptions.RemoveEmptyEntries);
-			if (words.Length > 0)
-			{
-				words[0] = words[0].Substring(0, 1).ToUpper() + words[0].Substring(1, words[0].Length - 1).ToLower();
-			}
-			normalizedString = string.Join(" ", words);
-		}
-
 		private void EditButtonEnabled()
 		{
 			if (productCheckedListBox.SelectedIndex >= 0)
@@ -84,6 +89,11 @@ namespace ShoppingList
 				downButton.Enabled = false;
 				upButton.Enabled = false;
 			}
+		}
+
+		private void IsPossibleDelete(ItemCheckEventArgs e)
+		{
+			deleteButton.Enabled = productCheckedListBox.CheckedItems.Count > 1 || e.NewValue == CheckState.Checked;
 		}
 
 		private void MoveItemDown(int newItemPosition)
@@ -116,7 +126,7 @@ namespace ShoppingList
 
 		private void ProductTextBox_TextChanged(object sender, EventArgs e)
 		{
-			IsAddButtonEnabled();
+			bool addButtonEnabled = IsAddButtonEnabled;
 		}
 
 		private void UpButton_Click(object sender, EventArgs e)
