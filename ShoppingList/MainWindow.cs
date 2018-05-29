@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace ShoppingList
@@ -20,21 +21,14 @@ namespace ShoppingList
 
 		private void DeleteButton_Click(object sender, EventArgs e)
 		{
-			DeleteElements();
+			DeleteElement();
 			IsPossibleDelete(new ItemCheckEventArgs(0, CheckState.Unchecked, CheckState.Unchecked));
-			MoveButtonEnabled();
+			EditButtonEnabled();
 		}
 
-		private void DeleteElements()
+		private void DeleteElement()
 		{
-			for (int i = 0; i < productCheckedListBox.Items.Count; ++i)
-			{
-				if (productCheckedListBox.CheckedItems.Contains(productCheckedListBox.Items[i]))
-				{
-					productCheckedListBox.Items.RemoveAt(i);
-					--i;
-				}
-			}
+			productCheckedListBox.Items.RemoveAt(productCheckedListBox.SelectedIndex);
 		}
 
 		private void DownButton_Click(object sender, EventArgs e)
@@ -69,12 +63,13 @@ namespace ShoppingList
 			normalizedString = string.Join(" ", words);
 		}
 
-		private void MoveButtonEnabled()
+		private void EditButtonEnabled()
 		{
 			if (productCheckedListBox.SelectedIndex >= 0)
 			{
 				downButton.Enabled = true;
 				upButton.Enabled = true;
+				deleteButton.Enabled = true;
 				if (productCheckedListBox.SelectedIndex == 0)
 				{
 					upButton.Enabled = false;
@@ -116,7 +111,7 @@ namespace ShoppingList
 
 		private void ProductCheckedListBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			MoveButtonEnabled();
+			EditButtonEnabled();
 		}
 
 		private void ProductTextBox_TextChanged(object sender, EventArgs e)
