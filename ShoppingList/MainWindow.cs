@@ -54,7 +54,6 @@ namespace ShoppingList
 		private void DeleteButton_Click(object sender, EventArgs e)
 		{
 			DeleteElement();
-			IsPossibleDelete(new ItemCheckEventArgs(0, CheckState.Unchecked, CheckState.Unchecked));
 			EditButtonEnabled();
 		}
 
@@ -91,11 +90,6 @@ namespace ShoppingList
 			}
 		}
 
-		private void IsPossibleDelete(ItemCheckEventArgs e)
-		{
-			deleteButton.Enabled = productCheckedListBox.CheckedItems.Count > 1 || e.NewValue == CheckState.Checked;
-		}
-
 		private void MoveItemDown(int newItemPosition)
 		{
 			CheckState checkState = productCheckedListBox.CheckedItems.Contains(productCheckedListBox.SelectedItem) ? CheckState.Checked : CheckState.Unchecked;
@@ -112,11 +106,6 @@ namespace ShoppingList
 			productCheckedListBox.SetItemCheckState(newItemPosition, checkState);
 			productCheckedListBox.Items.RemoveAt(productCheckedListBox.SelectedIndex);
 			productCheckedListBox.SetSelected(newItemPosition, true);
-		}
-
-		private void ProductCheckedListBox_ItemCheck(object sender, ItemCheckEventArgs e)
-		{
-			IsPossibleDelete(e);
 		}
 
 		private void ProductCheckedListBox_SelectedIndexChanged(object sender, EventArgs e)

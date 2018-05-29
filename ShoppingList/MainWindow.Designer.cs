@@ -86,7 +86,6 @@
 			this.productCheckedListBox.Name = "productCheckedListBox";
 			this.productCheckedListBox.Size = new System.Drawing.Size(327, 289);
 			this.productCheckedListBox.TabIndex = 4;
-			this.productCheckedListBox.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.ProductCheckedListBox_ItemCheck);
 			this.productCheckedListBox.SelectedIndexChanged += new System.EventHandler(this.ProductCheckedListBox_SelectedIndexChanged);
 			// 
 			// downButton
