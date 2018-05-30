@@ -14,10 +14,7 @@ namespace ShoppingList
 
 		public bool IsAddButtonEnabled
 		{
-			get
-			{
-				return addButton.Enabled = IsUniqueString;
-			}
+			get { return addButton.Enabled = IsUniqueString; }
 		}
 
 		public bool IsUniqueString
