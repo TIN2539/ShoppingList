@@ -87,6 +87,7 @@ namespace ShoppingList
 			{
 				downButton.Enabled = false;
 				upButton.Enabled = false;
+				deleteButton.Enabled = false;
 			}
 		}
 
